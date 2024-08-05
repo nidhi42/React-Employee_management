@@ -1,0 +1,58 @@
+.header {
+    background-color: blue;
+    padding: 20px 0;
+    height: 60px;
+    line-height: 55px;
+}
+h1{
+    text-align: center;
+    color: #fff;
+    margin-top: 0;
+}
+.content-section {
+    margin: 30px 10% 0 10%;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  .form-container {
+    text-align:center;
+    width: 500px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  input[type="text"],input[type="date"] , input[type="number"]{
+    
+    height: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+
+  }
+  input[type="button"], input[type="submit"] {
+    height:30px;
+    margin-left: 20px;
+    margin: 20px 0;
+    margin-right: 10px
+  }
+ label {
+    display: block;
+ }
+ .add-employee-btn {
+  float: right;
+  margin-bottom: 20px;
+ }
+ .list-header {
+  text-align: center;
+ }
