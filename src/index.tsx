@@ -5,12 +5,19 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Home from './components/Home';
 
+import { BrowserRouter, Route, Routes  } from 'react-router-dom';
+import EmployeeForm from './components/employeeForm';
+import AddEmployee from './components/addEmployee';
+import App from './App';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-   <Home></Home>
+    <BrowserRouter>
+   <App></App>
+   </BrowserRouter>
   </React.StrictMode>
 );
 

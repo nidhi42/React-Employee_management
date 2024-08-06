@@ -18,7 +18,10 @@ const EmployeeForm = (props: Props) => {
     const [birthdate, setBirthDate] = useState("");
     const [department, setDepartment] = useState("");
     const [experience, setExperience] = useState(1);
-
+    const [errors, setErrors] = useState({
+        fullname: "",
+        experience: ""
+      });
     // Update state with props.data when in edit mode
     useEffect(() => {
         if (isEditMode && data) {
@@ -34,7 +37,13 @@ const EmployeeForm = (props: Props) => {
         switch (name) {
             case "fullname":
                 setFullName(value);
-                break;
+                 // Validation for fullname (only characters)
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            fullname: /^[a-zA-Z\s]*$/.test(value) ? "" : "Full Name should contain only characters"
+          }));
+          break;
+                
             case "birthdate":
                 setBirthDate(value);
                 break;

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import "./Home.style.css";
-import { IEmployee } from "../employee.type";
-import EmployeeTableList from "./employeeList";
-import EmployeeForm from "./employeeForm";
 
-const Home = () => {
+import { IEmployee } from "./employee.type";
+import EmployeeTableList from "./components/employeeList";
+import EmployeeForm from "./components/employeeForm";
+
+
+const App = () => {
   const [employeeList, setEmployeeList] = useState([] as IEmployee[]);
   const [dataToEdit, setDataToEdit] = useState({} as IEmployee);
   const navigate = useNavigate();
@@ -53,14 +54,14 @@ const Home = () => {
         </header>
       </article>
       <section className="content-section">
-        <BrowserRouter>
+        
         <Routes>
           <Route path="/" element={
             <div>
               <input
                 type="button"
                 value="Add Employee"
-                onClick={() => navigate('/add')}
+                onClick={() => window.location.href = '/'}
                 className="add-employee-btn"
               />
               <EmployeeTableList
@@ -88,10 +89,10 @@ const Home = () => {
             />
           } />
         </Routes>
-        </BrowserRouter>
+  
       </section>
     </>
   );
 };
 
-export default Home;
+export default App;

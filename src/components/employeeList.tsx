@@ -32,7 +32,7 @@ const EmployeeTableList = (props: Props )=> {
                 <td>{employee.experience}</td>
                 <td>
                     <div>
-                        <input type="button" value="View"></input>
+                       
                         <input type="button" value="Edit" onClick={() => onEdit(employee)}></input>
                         <input type="button" value="Delete" onClick={() => onDeleteClickHnd(employee)}></input>
                     </div>
