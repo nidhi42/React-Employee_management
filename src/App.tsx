@@ -61,7 +61,7 @@ const App = () => {
               <input
                 type="button"
                 value="Add Employee"
-                onClick={() => window.location.href = '/'}
+                onClick={() => navigate('/add')}
                 className="add-employee-btn"
               />
               <EmployeeTableList

@@ -52,6 +52,11 @@ const EmployeeForm = (props: Props) => {
                 break;
             case "experience":
                 setExperience(parseInt(value, 10));
+                 // Validation for experience (only numbers)
+                setErrors(prevErrors => ({
+                    ...prevErrors,
+                    experience: /^\d+$/.test(value) ? "" : "Experience should be a valid number"
+                }));
                 break;
             default:
                 break;
@@ -60,6 +65,11 @@ const EmployeeForm = (props: Props) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // Check for validation errors
+    if (errors.fullname || errors.experience) {
+        return; // Don't submit form if there are validation errors
+      }
+  
         const formData: IEmployee = {
             id: isEditMode && data ? data.id : new Date().toJSON().toString(),
             fullname,
@@ -82,22 +92,24 @@ const EmployeeForm = (props: Props) => {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Full Name:</label>
-                    <input type="text" name="fullname" value={fullname} onChange={handleChange} />
+                    <input type="text" name="fullname" value={fullname} onChange={handleChange} required />
+                    {errors.fullname && <p className="error-message">{errors.fullname}</p>}
                 </div>
                 <div>
                     <label>Birthdate:</label>
-                    <input type="date" name="birthdate" value={birthdate} onClick={(e) => e.currentTarget.showPicker()} onChange={handleChange} />
+                    <input type="date" name="birthdate" value={birthdate} onClick={(e) => e.currentTarget.showPicker()} onChange={handleChange} required />
                 </div>
                 <div>
                     <label>Department:</label>
-                    <input type="text" name="department" value={department} onChange={handleChange} />
+                    <input type="text" name="department" value={department} onChange={handleChange} required/>
                 </div>
                 <div>
                     <label>Experience:</label>
-                    <input type="number" name="experience" value={experience} onChange={handleChange} />
+                    <input type="number" name="experience" value={experience} onChange={handleChange} required/>
+                    {errors.experience && <p className="error-message">{errors.experience}</p>}
                 </div>
                 <div>
-                    <input type="button" value="Back" onClick={onBackButtonClickHnd} />
+                    <input type="button" value="Back" onClick={onBackButtonClickHnd}/>
                     <input type="submit" value={isEditMode ? "Update Employee" : "Add Employee"} />
                 </div>
             </form>

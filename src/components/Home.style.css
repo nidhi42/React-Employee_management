@@ -22,6 +22,7 @@ table {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+    font-family: Arial, Helvetica, sans-serif;
   }
   
   tr:nth-child(even) {
@@ -34,8 +35,9 @@ table {
     text-align: left;
   }
   input[type="text"],input[type="date"] , input[type="number"]{
-    
-    height: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 30px;
     width: 100%;
     margin-bottom: 20px;
 
@@ -48,6 +50,7 @@ table {
   }
  label {
     display: block;
+    font-family: Arial, Helvetica, sans-serif;
  }
  .add-employee-btn {
   float: right;
@@ -55,4 +58,15 @@ table {
  }
  .list-header {
   text-align: center;
+ }
+ .error-message {
+  color: red;
+  margin-top: 0;
+ }
+ input[type="button"], input[type="submit"] {
+  background-color: blue;
+  border-radius: 2px;
+  color:#fff;
+  border: none;
+  cursor: pointer;
  }
