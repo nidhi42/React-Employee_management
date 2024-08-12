@@ -1,49 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from './store';
+import { addEmployee, updateEmployee, deleteEmployee } from './store/employeeSlice';
 import { IEmployee } from "./employee.type";
 import EmployeeTableList from "./components/employeeList";
 import EmployeeForm from "./components/employeeForm";
-
+import ConfirmationModal from "./components/confimrationModel";
 
 const App = () => {
-  const [employeeList, setEmployeeList] = useState([] as IEmployee[]);
+  const employeeList = useSelector((state: RootState) => state.employee);
+  const dispatch = useDispatch<AppDispatch>();
   const [dataToEdit, setDataToEdit] = useState({} as IEmployee);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [employeeToDelete, setEmployeeToDelete] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const listInString = window.localStorage.getItem("EmployeeList");
-    if (listInString) {
-      setEmployeeList(JSON.parse(listInString));
-    }
-  }, []);
-
   const addEmployeeHnd = (data: IEmployee) => {
-    _setEmployeeList([...employeeList, data]);
-    navigate('/'); // Redirect back to the list page after adding
+    dispatch(addEmployee(data));
+    navigate('/');
   };
 
-  const deleteEmployee = (data: IEmployee) => {
-    const tempList = employeeList.filter(emp => emp.id !== data.id);
-    _setEmployeeList(tempList);
+  const deleteEmployeeHnd = (id: string) => {
+    console.log("Delete button clicked for employee with id:", id);
+    setEmployeeToDelete(id);
+    setIsModalVisible(true);
   };
 
-  const editEmployee = (data: IEmployee) => {
+  const confirmDelete = () => {
+    if (employeeToDelete) {
+      dispatch(deleteEmployee(employeeToDelete));
+      setEmployeeToDelete(null);
+    }
+    setIsModalVisible(false);
+  };
+
+  const cancelDelete = () => {
+    setEmployeeToDelete(null);
+    setIsModalVisible(false);
+  };
+
+  const editEmployeeHnd = (data: IEmployee) => {
     setDataToEdit(data);
-    navigate('/edit'); // Redirect to the edit page
+    navigate('/edit');
   };
 
-  const updateData = (data: IEmployee) => {
-    const updatedList = employeeList.map(emp =>
-      emp.id === data.id ? { ...data } : emp
-    );
-    _setEmployeeList(updatedList);
-    navigate('/'); // Redirect back to the list page after updating
-  };
-
-  const _setEmployeeList = (list: IEmployee[]) => {
-    setEmployeeList(list);
-    window.localStorage.setItem("EmployeeList", JSON.stringify(list));
+  const updateEmployeeHnd = (data: IEmployee) => {
+    dispatch(updateEmployee(data));
+    navigate('/');
   };
 
   return (
@@ -54,7 +58,6 @@ const App = () => {
         </header>
       </article>
       <section className="content-section">
-        
         <Routes>
           <Route path="/" element={
             <div>
@@ -66,8 +69,8 @@ const App = () => {
               />
               <EmployeeTableList
                 list={employeeList}
-                onDeleteClickHnd={deleteEmployee}
-                onEdit={editEmployee}
+                onDeleteClickHnd={deleteEmployeeHnd}
+                onEdit={editEmployeeHnd}
               />
             </div>
           } />
@@ -76,7 +79,7 @@ const App = () => {
               isEditMode={false}
               onBackButtonClickHnd={() => navigate('/')}
               onSubmitClickHnd={addEmployeeHnd}
-              onUpdateClickHnd={updateData}
+              onUpdateClickHnd={updateEmployeeHnd}
             />
           } />
           <Route path="/edit" element={
@@ -84,13 +87,17 @@ const App = () => {
               isEditMode={true}
               data={dataToEdit}
               onBackButtonClickHnd={() => navigate('/')}
-              onSubmitClickHnd={updateData} // Changed to updateData
-              onUpdateClickHnd={updateData}
+              onSubmitClickHnd={updateEmployeeHnd}
+              onUpdateClickHnd={updateEmployeeHnd}
             />
           } />
         </Routes>
-  
       </section>
+      <ConfirmationModal
+        isVisible={isModalVisible}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
     </>
   );
 };

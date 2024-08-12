@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 import reportWebVitals from './reportWebVitals';
-import Home from './components/Home';
+
 
 import { BrowserRouter, Route, Routes  } from 'react-router-dom';
-import EmployeeForm from './components/employeeForm';
-import AddEmployee from './components/addEmployee';
 import App from './App';
+import { Provider } from 'react-redux';
+import store from './store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,7 +16,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <Provider  store={store}>
    <App></App>
+   </Provider>
    </BrowserRouter>
   </React.StrictMode>
 );
